@@ -1,2 +1,2 @@
 Dashboard Magic:
-https://salesforce.vidyard.com/watch/UZcyRofHuyevTaMUbAJcBV?
+https://salesforce.vidyard.com/watch/UZcyRofHuyevTaMUbAJcBV
