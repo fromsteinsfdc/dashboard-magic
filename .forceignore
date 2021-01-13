@@ -1,0 +1,24 @@
+# List files or directories below to ignore them when running force:source:push, force:source:pull, and force:source:status
+# More information: https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.m    eta/sfdx_dev/sfdx_dev_exclude_source.htm
+#
+
+# .forceignore v2
+
+package.xml
+
+# LWC configuration files
+**/jsconfig.json
+**/.eslintrc.json
+
+# LWC Jest
+**/__tests__/**
+
+force-app/main/default/flexipages/Fake_Report_Data_Generator.flexipage-meta.xml
+force-app/main/default/connectedApps
+force-app/main/default/classes/MockHttpResponseGenerator.*
+force-app/main/default/classes/ReportFakerWebMock.*
+force-app/main/default/classes/ReportFakerMockHttpResponseGenerator.*
+force-app/main/default/lwc/warningModal
+force-app/main/default/namedCredentials
+force-app/main/default/authproviders
+force-app/main/default/reports/DemoDashboardChartGeneratorReports.reportFolder-meta.*
