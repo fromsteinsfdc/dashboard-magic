@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Accordion</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="isExpanded" label="Is Expanded" type="Boolean"/>
+            <property name="label" label="Label" type="String" required="true"/>
+            <!-- <property name="groupName" label="Group Name (optional)" type="String"/> -->
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
