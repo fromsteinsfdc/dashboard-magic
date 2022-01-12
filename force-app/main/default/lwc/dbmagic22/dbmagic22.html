@@ -1,0 +1,200 @@
+<template>
+    <!-- {fakedataString}<br> -->
+    <!-- {currentGroupingsString}<br> -->
+    <!-- {currentGroupingIndicesString}<br> -->
+    <article class="slds-card">
+        <div class="slds-page-header slds-box">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-investment-account">
+                                <lightning-icon icon-name="utility:magicwand" variant="inverse"
+                                    class="slds-p-around_xxx-small"></lightning-icon>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span>Dashboard Magic</span>
+                                        <span class="slds-page-header__title slds-truncate">Create Fake Data</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__col-actions">
+                    <div class="slds-page-header__controls">
+                        <div class="slds-page-header__control">
+                            <lightning-button-group>
+                                <lightning-button label="New Grouping" onclick={handleAddGroupingClick}></lightning-button>
+                                <template if:true={useSubgroupings}>
+                                    <lightning-button-menu menu-alignment="auto" label="New Subgrouping For">
+                                        <template for:each={currentGroupings} for:item="grouping">
+                                            <lightning-menu-item label={grouping.label} key={grouping.groupingIndex}
+                                                data-grouping-index={grouping.groupingIndex}
+                                                onclick={handleAddSubgroupingClick}>
+                                            </lightning-menu-item>
+                                        </template>
+                                    </lightning-button-menu>
+                                    <lightning-button label="Mass Add Subgroupings" onclick={handleOpenMassAddClick}>
+                                    </lightning-button>
+                                </template>
+                                <lightning-button label="Clear All" onclick={handleClearAllClick}
+                                    disabled={clearAllIsDisabled}></lightning-button>
+                            </lightning-button-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-controls">
+                    <div class="slds-page-header__controls">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- <input>
+        <lightning-button label="Submit" onclick={handleSubmit}></lightning-button> -->
+
+        <div class="inputContainer2 slds-hide">
+            <div class="headerRow slds-grid slds-gutters slds-text-heading_small slds-p-around_small">
+                <div class="slds-col slds-size_1-of-3">
+                    <span class="slds-align_absolute-center">Labels</span>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <span class="slds-align_absolute-center">Values</span>
+                </div>
+            </div>
+            <template for:each={fakedata} for:item="data" for:index="index">
+                <template if:true={data.isFirst}>
+                    <div class="groupingRow" key={data.id}>
+                        A                            <lightning-button-icon icon-name="utility:add" data-grouping-index={data.groupingIndex}
+                        title="Add subgrouping" onclick={handleAddSubgroupingClick}
+                        class="slds-p-around_xxx-small">
+                    </lightning-button-icon>
+
+                        <!-- <lightning-input value={data.grouping} oncommit={handleFakedataChange} variant="label-hidden"
+                            label="Grouping" data-property="grouping" data-grouping-index={data.groupingIndex}
+                            data-index={index} required>
+                        </lightning-input>
+                        <template if:false={useSubgroupings}>
+                            <lightning-input type="number" min="0" value={data.value} variant="label-hidden"
+                                label="Value" oncommit={handleFakedataChange} data-property="value" data-index={index}
+                                required>
+                            </lightning-input>
+                        </template>
+                        <template if:true={useSubgroupings}>
+                            <lightning-button-icon icon-name="utility:add" data-grouping-index={data.groupingIndex}
+                                title="Add subgrouping" onclick={handleAddSubgroupingClick}
+                                class="slds-p-around_xxx-small">
+                            </lightning-button-icon>
+                        </template> -->
+                    </div>
+                </template>
+                <template if:true={useSubgroupings}>
+                    <div class="subgroupingRow" key={data.id}>
+                        B
+                        <!-- <lightning-input value={data.subgrouping} oncommit={handleFakedataChange} variant="label-hidden"
+                            label="Subgrouping" data-property="subgrouping" data-index={index} required>
+                        </lightning-input>
+                        <lightning-input type="number" value={data.value} oncommit={handleFakedataChange}
+                            variant="label-hidden" label="Value" data-property="value" data-index={index} required>
+                        </lightning-input> -->
+                    </div>
+
+                </template>
+            </template>
+        </div>
+
+
+        <!-- START OF INPUT CONTAINER -->
+        <div class="inputContainer">
+            <div class="inputGrid slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small">
+                <div
+                    class="headerRow slds-col slds-size_1-of-1 slds-grid slds-gutters slds-text-heading_small slds-p-around_small">
+                    <div class="slds-col slds-size_1-of-3">
+                        <span class="slds-align_absolute-center">Labels</span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span class="slds-align_absolute-center">Values</span>
+                    </div>
+                </div>
+
+                <!-- Loop through each of the fakedata records -->
+                <template for:each={fakedata} for:item="data" for:index="index">
+                    <!-- Only display the primary row if the record's isFirst = true. This is always the case when useSubgroupings = false. -->
+                    <template if:true={data.isFirst}>
+                        <div class="groupingRow dataRow slds-col slds-size_1-of-1 slds-grid slds-gutters slds-p-around_xx-small"
+                            key={data.id}>
+                            <div class="slds-col slds-size_5-of-12">
+                                <lightning-input value={data.grouping} oncommit={handleFakedataChange}
+                                    variant="label-hidden" label="Grouping" data-property="grouping"
+                                    data-grouping-index={data.groupingIndex} data-index={index} required>
+                                </lightning-input>
+                            </div>
+                            <!-- Only display the value input if not using secondary groupings. If useSubgroupings = true, the values will be collected at the subgrouping level. -->
+                            <template if:false={useSubgroupings}>
+                                <div class="slds-col slds-size_5-of-12">
+                                    <lightning-input type="number" min="0" value={data.value} variant="label-hidden"
+                                        label="Value" oncommit={handleFakedataChange} data-property="value"
+                                        data-index={index} required></lightning-input>
+                                </div>
+                            </template>
+                            <div class="rowActions">
+                                <template if:true={useSubgroupings}>
+                                    <lightning-button-icon icon-name="utility:add"
+                                        data-grouping-index={data.groupingIndex} title="Add subgrouping"
+                                        onclick={handleAddSubgroupingClick} class="slds-p-around_xxx-small">
+                                    </lightning-button-icon>
+                                </template>
+                                <lightning-button-icon icon-name="utility:delete" data-action="delete"
+                                    data-grouping-index={data.groupingIndex} onclick={handleGroupingDelete}
+                                    class="dimmedButton slds-p-around_xxx-small">
+                                </lightning-button-icon>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- If useSubgroupings = true, display a second row consisting of the subgrouping name and the value-->
+                    <template if:true={useSubgroupings}>
+                        <div class="subgroupingRow dataRow slds-col slds-size_1-of-1 slds-grid slds-gutters slds-p-around_xx-small"
+                            key={data.id}>
+                            <div class="slds-col slds-size_1-of-12"></div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input value={data.subgrouping} oncommit={handleFakedataChange}
+                                    variant="label-hidden" label="Subgrouping" data-property="subgrouping"
+                                    data-index={index} required></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input type="number" value={data.value} oncommit={handleFakedataChange}
+                                    variant="label-hidden" label="Value" data-property="value" data-index={index}
+                                    required></lightning-input>
+                            </div>
+                            <div class="rowActions">
+                                <lightning-button-icon icon-name="utility:delete" data-action="delete"
+                                    data-index={index} onclick={handleSubgroupingDelete}
+                                    class="dimmedButton slds-p-around_xxx-small">
+                                </lightning-button-icon>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </article>
+
+    <c-fsc_lwc-modal class="confirmation" confirmation={confirmation} onbuttonclick={handleModalButtonClick}>
+    </c-fsc_lwc-modal>
+    <c-fsc_lwc-modal header="Mass Add Subgroupings" class="massAddModal" onconfirm={handleMassAddConfirm}
+        confirm-button-label="Save">
+        <textarea placeholder="Enter subgroupings (one per line)" rows=10
+            class="slds-textarea">{massAddString}</textarea>
+        <!-- <lightning-textarea label="Subgroupings (enter one per line)" rows=10></lightning-textarea> -->
+    </c-fsc_lwc-modal>
+</template>

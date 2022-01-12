@@ -1,0 +1,12 @@
+.dimmedButton {
+    opacity: 0.1;
+    transition: opacity 0.5s;
+}
+
+.dataRow:hover .dimmedButton {
+    opacity: 1;
+}
+
+.subgroupingRow + .groupingRow {
+    padding-top: 2em;
+}

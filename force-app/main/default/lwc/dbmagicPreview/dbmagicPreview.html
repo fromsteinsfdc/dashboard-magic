@@ -1,0 +1,30 @@
+<template>
+    <!-- {chartDataString}<br>
+    {datasetsString}<br> -->
+    <template if:false={hideChart}>
+        <div class="chartContainer slds-p-around_small">
+            <c-chart type={chartType} responsive="true" stylecss="position: relative; margin: auto;" events='["click"]'
+                width={chartWidth} height={chartHeight}>
+                <c-dataset labels={chartLabels}>
+                    <template for:each={datasets} for:item="dataset">
+                        <c-data label={dataset.label} detail={dataset.data} backgroundcolor={dataset.colour}
+                            borderwidth="1" key={data}></c-data>
+                    </template>
+                </c-dataset>
+                <c-cartesian-category-axis axis={grouping1Axis} title-labelstring={grouping1Name} title-display
+                    stacked={isStacked}>
+                </c-cartesian-category-axis>
+                <c-cartesian-linear-axis axis={metricNameAxis} title-labelstring={metricName} title-display
+                    stacked={isStacked} ticks-beginatzero></c-cartesian-linear-axis>
+
+                <c-title text={chartTitle}></c-title>
+                 <c-legend position="bottom" display={uniqueGroupings.size}></c-legend>
+                <!--  <c-animation duration="2000" easing="easeInBounce"> </c-animation> -->
+                <!--  <c-cartesian-category-axis axis="x" position="top"></c-cartesian-category-axis> -->
+            </c-chart>
+        </div>
+    </template>
+    <template if:true={hideChart}>
+        <p class="slds-text-body_regular">The chart cannot be rendered as it has not received any data to display.</p>
+    </template>
+</template>
